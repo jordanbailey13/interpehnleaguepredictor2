@@ -16,7 +16,8 @@ body {
 }
 
 .numbers, .teams {
-    margin: 10px;
+    margin: 0;
+    padding: 0;
 }
 
 .numbers {
@@ -31,10 +32,13 @@ body {
 }
 
 .number, .team {
-    padding: 10px;
+    padding: 5px;
     border: 1px solid #ccc;
     background-color: #fff;
-    margin: 5px;
+    margin: 2px;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden;    /* Hide overflowed text */
+    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
 }
 
 .team {
