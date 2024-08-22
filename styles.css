@@ -12,20 +12,22 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    width: 100%;
-    max-width: 100%;
+    width: 80vw; /* Adjust this percentage based on your needs */
+    max-width: 1200px; /* Maximum width of the container */
+    height: 80vh; /* Adjust this percentage based on your needs */
+    max-height: 600px; /* Maximum height of the container */
     overflow: hidden;
 }
 
 .numbers, .teams {
-    margin: 10px;
+    margin: 5px;
 }
 
 .numbers {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    font-size: 18px;
+    font-size: calc(18px + 0.5vw); /* Responsive font size */
     font-weight: bold;
     width: 60px;
 }
@@ -34,17 +36,18 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 300px;
+    width: 50%;
 }
 
 .team {
-    padding: 10px;
-    margin: 5px 0;
+    padding: 8px;
+    margin: 4px 0;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: calc(14px + 0.5vw); /* Responsive font size */
 }
 
 .team:hover {
