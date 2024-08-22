@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "Tottenham Hotspur",
         "Aston Villa",
         "West Ham United",
-        "Brighton and Hove Albion",
+        "Brighton & Hove Albion",  // Updated team name
         "Wolves",
         "Everton",
         "Crystal Palace",
@@ -42,40 +42,4 @@ document.addEventListener('DOMContentLoaded', () => {
         teamDiv.textContent = team;
         teamDiv.setAttribute('draggable', 'true');
         teamDiv.dataset.index = index;
-        teamList.appendChild(teamDiv);
-    });
-
-    // Drag and Drop functionality
-    let draggedItem = null;
-
-    document.addEventListener('dragstart', (e) => {
-        if (e.target.classList.contains('team')) {
-            draggedItem = e.target;
-            e.target.style.opacity = '0.5';
-        }
-    });
-
-    document.addEventListener('dragend', (e) => {
-        if (e.target.classList.contains('team')) {
-            e.target.style.opacity = '1';
-        }
-    });
-
-    teamList.addEventListener('dragover', (e) => {
-        e.preventDefault();
-    });
-
-    teamList.addEventListener('drop', (e) => {
-        e.preventDefault();
-        if (e.target.classList.contains('team')) {
-            const target = e.target;
-            const targetIndex = target.dataset.index;
-            const draggedIndex = draggedItem.dataset.index;
-            // Swap positions
-            target.textContent = draggedItem.textContent;
-            draggedItem.textContent = target.textContent;
-            target.dataset.index = draggedIndex;
-            draggedItem.dataset.index = targetIndex;
-        }
-    });
-});
+        t
