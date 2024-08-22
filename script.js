@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", function() {
         "Ipswich Town"
     ];
 
-    const numbersContainer = document.getElementById("numbers");
-    const teamsContainer = document.getElementById("teams");
+    const numbersContainer = document.querySelector(".numbers");
+    const teamsContainer = document.querySelector(".teams");
 
     function generateNumbers() {
         for (let i = 1; i <= 20; i++) {
@@ -36,11 +36,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function generateTeams() {
         const shuffledTeams = teams.sort(() => Math.random() - 0.5);
-        shuffledTeams.forEach(team => {
+        shuffledTeams.forEach((team, index) => {
             const teamElement = document.createElement("div");
             teamElement.className = "team";
             teamElement.textContent = team;
             teamElement.draggable = true;
+            teamElement.dataset.index = index; // Assign index for positioning
             teamElement.addEventListener("dragstart", onDragStart);
             teamElement.addEventListener("dragover", onDragOver);
             teamElement.addEventListener("drop", onDrop);
@@ -49,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function onDragStart(event) {
-        event.dataTransfer.setData("text/plain", event.target.textContent);
+        event.dataTransfer.setData("text/plain", event.target.dataset.index);
         event.dataTransfer.effectAllowed = "move";
     }
 
@@ -60,20 +61,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function onDrop(event) {
         event.preventDefault();
-        const draggedText = event.dataTransfer.getData("text/plain");
+        const draggedIndex = event.dataTransfer.getData("text/plain");
         const dropTarget = event.target;
 
         if (dropTarget.classList.contains("team")) {
             const allTeams = Array.from(teamsContainer.children);
-            const dropIndex = allTeams.indexOf(dropTarget);
-            const draggedIndex = allTeams.findIndex(t => t.textContent === draggedText);
+            const dropIndex = Array.from(dropTarget.parentNode.children).indexOf(dropTarget);
+            const draggedElement = allTeams[draggedIndex];
 
-            if (draggedIndex !== -1) {
-                teamsContainer.insertBefore(
-                    allTeams[draggedIndex],
-                    dropIndex < draggedIndex ? dropTarget : dropTarget.nextSibling
-                );
-            }
+            teamsContainer.insertBefore(
+                draggedElement,
+                dropIndex < draggedIndex ? dropTarget : dropTarget.nextSibling
+            );
         }
     }
 
