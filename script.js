@@ -1,30 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const teamNames = [
-        'Manchester City', 'Arsenal', 'Liverpool', 'Newcastle United', 'Manchester United',
-        'Chelsea', 'Tottenham Hotspur', 'Aston Villa', 'West Ham United', 'Brighton and Hove Albion',
-        'Wolves', 'Everton', 'Crystal Palace', 'Brentford', 'Bournemouth', 'Fulham', 'Southampton',
-        'Leicester City', 'Nottingham Forest', 'Ipswich Town'
-    ];
+    const teams = document.querySelectorAll('.team');
+    const numbers = document.querySelectorAll('.number');
 
-    const numbersContainer = document.querySelector('.numbers');
-    const teamsContainer = document.getElementById('teamContainer');
+    teams.forEach(team => {
+        team.addEventListener('dragstart', handleDragStart);
+        team.addEventListener('dragend', handleDragEnd);
+    });
 
-    // Generate numbers
-    for (let i = 1; i <= 20; i++) {
-        const div = document.createElement('div');
-        div.textContent = i;
-        numbersContainer.appendChild(div);
-    }
-
-    // Generate team names in random order
-    const shuffledTeamNames = teamNames.sort(() => Math.random() - 0.5);
-    shuffledTeamNames.forEach(teamName => {
-        const div = document.createElement('div');
-        div.textContent = teamName;
-        div.draggable = true;
-        div.addEventListener('dragstart', handleDragStart);
-        div.addEventListener('dragend', handleDragEnd);
-        teamsContainer.appendChild(div);
+    numbers.forEach(number => {
+        number.addEventListener('dragover', handleDragOver);
+        number.addEventListener('drop', handleDrop);
     });
 
     function handleDragStart(e) {
@@ -36,16 +21,28 @@ document.addEventListener('DOMContentLoaded', () => {
         e.target.classList.remove('dragging');
     }
 
-    teamsContainer.addEventListener('dragover', (e) => {
+    function handleDragOver(e) {
         e.preventDefault();
-    });
+    }
 
-    teamsContainer.addEventListener('drop', (e) => {
+    function handleDrop(e) {
         e.preventDefault();
-        const draggedItemText = e.dataTransfer.getData('text/plain');
-        const target = e.target;
-        if (target && target !== e.target) {
-            target.textContent = draggedItemText;
+        const droppedTeamName = e.dataTransfer.getData('text/plain');
+        const dropTarget = e.target;
+        
+        if (dropTarget.classList.contains('number')) {
+            const allTeams = document.querySelectorAll('.team');
+            const teamToMove = Array.from(allTeams).find(team => team.textContent === droppedTeamName);
+
+            if (teamToMove) {
+                dropTarget.parentNode.insertBefore(teamToMove, dropTarget.nextSibling);
+            }
         }
-    });
+    }
+
+    // Shuffle teams
+    const teamsContainer = document.querySelector('.teams');
+    for (let i = teamsContainer.children.length; i >= 0; i--) {
+        teamsContainer.appendChild(teamsContainer.children[Math.random() * i | 0]);
+    }
 });
