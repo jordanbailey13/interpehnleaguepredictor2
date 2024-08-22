@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+}
+
+.numbers {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+
+.number {
+    width: 50px;
+    height: 30px;
+    border: 1px solid #ccc;
+    text-align: center;
+    line-height: 30px;
+    margin-bottom: 5px;
+}
+
+.teams {
+    display: flex;
+    flex-direction: column;
+}
+
+.team {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
