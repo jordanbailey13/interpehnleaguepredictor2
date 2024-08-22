@@ -1,24 +1,33 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f9; /* Light background color */
+    margin: 0;
+    padding: 20px;
 }
 
 .container {
     display: flex;
+    align-items: flex-start; /* Align items at the top */
+    gap: 20px; /* Space between the columns */
 }
 
 .numbers {
     display: flex;
     flex-direction: column;
-    margin-right: 20px;
 }
 
 .number {
-    width: 50px;
-    height: 30px;
-    border: 1px solid #ccc;
+    width: 60px;
+    height: 40px;
+    border: 2px solid #007bff; /* Blue border */
+    background-color: #fff; /* White background */
+    border-radius: 8px; /* Rounded corners */
     text-align: center;
-    line-height: 30px;
-    margin-bottom: 5px;
+    line-height: 40px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
 }
 
 .teams {
@@ -27,9 +36,20 @@ body {
 }
 
 .team {
-    width: 200px;
-    height: 30px;
-    border: 1px solid #ccc;
-    margin-bottom: 5px;
-    cursor: pointer;
+    width: 250px;
+    height: 40px;
+    border: 2px solid #007bff; /* Blue border */
+    background-color: #fff; /* White background */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 10px;
+    padding: 0 10px;
+    line-height: 40px;
+    font-size: 16px;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.team:hover {
+    background-color: #e9f5ff; /* Light blue background on hover */
 }
