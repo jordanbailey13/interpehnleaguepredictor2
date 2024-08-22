@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "Tottenham Hotspur",
         "Aston Villa",
         "West Ham United",
-        "Brighton & Hove Albion",  // Updated team name
+        "Brighton & Hove Albion",
         "Wolves",
         "Everton",
         "Crystal Palace",
