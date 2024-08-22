@@ -1,14 +1,11 @@
 html, body {
     height: 100%;
     margin: 0;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9; /* Light background color */
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #f4f4f9; /* Light background color */
+    overflow: hidden; /* Hide scrollbars */
 }
 
 .container {
@@ -19,6 +16,10 @@ body {
     max-height: 90vh; /* Ensure container doesn't exceed viewport height */
     overflow: auto; /* Enable scrolling if content overflows */
     box-sizing: border-box; /* Include padding and border in element's total width and height */
+    padding: 20px; /* Add padding around the content */
+    background-color: #fff; /* White background for the container */
+    border-radius: 12px; /* Rounded corners for the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for a card-like appearance */
 }
 
 .numbers {
@@ -63,4 +64,3 @@ body {
 .team:hover {
     background-color: #e9f5ff; /* Light blue background on hover */
 }
-
