@@ -1,32 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const teams = [
-        'Manchester City',
-        'Arsenal',
-        'Liverpool',
-        'Newcastle United',
-        'Manchester United',
-        'Chelsea',
-        'Tottenham Hotspur',
-        'Aston Villa',
-        'West Ham United',
-        'Brighton and Hove Albion',
-        'Wolves',
-        'Everton',
-        'Crystal Palace',
-        'Brentford',
-        'Bournemouth',
-        'Fulham',
-        'Southampton',
-        'Leicester City',
-        'Nottingham Forest',
-        'Ipswich Town'
+    const numbersContainer = document.getElementById('numbers');
+    const teamsContainer = document.getElementById('teams');
+
+    const teamNames = [
+        'Manchester City', 'Arsenal', 'Liverpool', 'Newcastle United', 'Manchester United',
+        'Chelsea', 'Tottenham Hotspur', 'Aston Villa', 'West Ham United', 'Brighton and Hove Albion',
+        'Wolves', 'Everton', 'Crystal Palace', 'Brentford', 'Bournemouth',
+        'Fulham', 'Southampton', 'Leicester City', 'Nottingham Forest', 'Ipswich Town'
     ];
 
-    const teamContainer = document.getElementById('teams');
-    const numberElements = document.querySelectorAll('.number');
+    // Generate numbers
+    for (let i = 1; i <= 20; i++) {
+        const numberDiv = document.createElement('div');
+        numberDiv.textContent = i;
+        numbersContainer.appendChild(numberDiv);
+    }
 
-    // Shuffle the teams array
-    function shuffle(array) {
+    // Shuffle team names
+    function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
@@ -34,40 +25,39 @@ document.addEventListener('DOMContentLoaded', () => {
         return array;
     }
 
-    // Add teams to the container
-    function renderTeams() {
-        const shuffledTeams = shuffle([...teams]);
-        shuffledTeams.forEach((team, index) => {
-            const div = document.createElement('div');
-            div.textContent = team;
-            div.className = 'team';
-            div.draggable = true;
-            div.dataset.index = index;
-            teamContainer.appendChild(div);
-        });
-    }
+    const shuffledTeamNames = shuffleArray([...teamNames]);
 
-    // Handle drag events
-    teamContainer.addEventListener('dragstart', (e) => {
-        e.dataTransfer.setData('text/plain', e.target.dataset.index);
+    // Generate team elements
+    shuffledTeamNames.forEach((name, index) => {
+        const teamDiv = document.createElement('div');
+        teamDiv.textContent = name;
+        teamDiv.className = 'team';
+        teamDiv.draggable = true;
+        teamDiv.dataset.index = index;
+        teamsContainer.appendChild(teamDiv);
     });
 
-    teamContainer.addEventListener('dragover', (e) => {
+    // Drag and drop logic
+    let draggedElement = null;
+
+    teamsContainer.addEventListener('dragstart', (e) => {
+        draggedElement = e.target;
+        e.target.style.opacity = 0.5;
+    });
+
+    teamsContainer.addEventListener('dragend', (e) => {
+        e.target.style.opacity = '';
+        draggedElement = null;
+    });
+
+    teamsContainer.addEventListener('dragover', (e) => {
         e.preventDefault();
     });
 
-    teamContainer.addEventListener('drop', (e) => {
+    teamsContainer.addEventListener('drop', (e) => {
         e.preventDefault();
-        const draggedIndex = e.dataTransfer.getData('text/plain');
-        const targetElement = e.target.closest('.team');
-        if (targetElement) {
-            const targetIndex = targetElement.dataset.index;
-            const draggedElement = teamContainer.querySelector(`.team[data-index="${draggedIndex}"]`);
-            targetElement.dataset.index = draggedIndex;
-            draggedElement.dataset.index = targetIndex;
-            teamContainer.insertBefore(draggedElement, targetElement);
+        if (e.target.classList.contains('team')) {
+            teamsContainer.insertBefore(draggedElement, e.target.nextSibling);
         }
     });
-
-    renderTeams();
 });
