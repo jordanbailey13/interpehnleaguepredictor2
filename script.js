@@ -1,48 +1,82 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const teams = document.querySelectorAll('.team');
-    const numbers = document.querySelectorAll('.number');
+document.addEventListener("DOMContentLoaded", function() {
+    const teams = [
+        "Manchester City",
+        "Arsenal",
+        "Liverpool",
+        "Newcastle United",
+        "Manchester United",
+        "Chelsea",
+        "Tottenham Hotspur",
+        "Aston Villa",
+        "West Ham United",
+        "Brighton and Hove Albion",
+        "Wolves",
+        "Everton",
+        "Crystal Palace",
+        "Brentford",
+        "Bournemouth",
+        "Fulham",
+        "Southampton",
+        "Leicester City",
+        "Nottingham Forest",
+        "Ipswich Town"
+    ];
 
-    teams.forEach(team => {
-        team.addEventListener('dragstart', handleDragStart);
-        team.addEventListener('dragend', handleDragEnd);
-    });
+    const numbersContainer = document.getElementById("numbers");
+    const teamsContainer = document.getElementById("teams");
 
-    numbers.forEach(number => {
-        number.addEventListener('dragover', handleDragOver);
-        number.addEventListener('drop', handleDrop);
-    });
-
-    function handleDragStart(e) {
-        e.dataTransfer.setData('text/plain', e.target.textContent);
-        e.target.classList.add('dragging');
+    function generateNumbers() {
+        for (let i = 1; i <= 20; i++) {
+            const numberElement = document.createElement("div");
+            numberElement.className = "number";
+            numberElement.textContent = i;
+            numbersContainer.appendChild(numberElement);
+        }
     }
 
-    function handleDragEnd(e) {
-        e.target.classList.remove('dragging');
+    function generateTeams() {
+        const shuffledTeams = teams.sort(() => Math.random() - 0.5);
+        shuffledTeams.forEach(team => {
+            const teamElement = document.createElement("div");
+            teamElement.className = "team";
+            teamElement.textContent = team;
+            teamElement.draggable = true;
+            teamElement.addEventListener("dragstart", onDragStart);
+            teamElement.addEventListener("dragover", onDragOver);
+            teamElement.addEventListener("drop", onDrop);
+            teamsContainer.appendChild(teamElement);
+        });
     }
 
-    function handleDragOver(e) {
-        e.preventDefault();
+    function onDragStart(event) {
+        event.dataTransfer.setData("text/plain", event.target.textContent);
+        event.dataTransfer.effectAllowed = "move";
     }
 
-    function handleDrop(e) {
-        e.preventDefault();
-        const droppedTeamName = e.dataTransfer.getData('text/plain');
-        const dropTarget = e.target;
-        
-        if (dropTarget.classList.contains('number')) {
-            const allTeams = document.querySelectorAll('.team');
-            const teamToMove = Array.from(allTeams).find(team => team.textContent === droppedTeamName);
+    function onDragOver(event) {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
+    }
 
-            if (teamToMove) {
-                dropTarget.parentNode.insertBefore(teamToMove, dropTarget.nextSibling);
+    function onDrop(event) {
+        event.preventDefault();
+        const draggedText = event.dataTransfer.getData("text/plain");
+        const dropTarget = event.target;
+
+        if (dropTarget.classList.contains("team")) {
+            const allTeams = Array.from(teamsContainer.children);
+            const dropIndex = allTeams.indexOf(dropTarget);
+            const draggedIndex = allTeams.findIndex(t => t.textContent === draggedText);
+
+            if (draggedIndex !== -1) {
+                teamsContainer.insertBefore(
+                    allTeams[draggedIndex],
+                    dropIndex < draggedIndex ? dropTarget : dropTarget.nextSibling
+                );
             }
         }
     }
 
-    // Shuffle teams
-    const teamsContainer = document.querySelector('.teams');
-    for (let i = teamsContainer.children.length; i >= 0; i--) {
-        teamsContainer.appendChild(teamsContainer.children[Math.random() * i | 0]);
-    }
+    generateNumbers();
+    generateTeams();
 });
