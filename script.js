@@ -1,5 +1,6 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const teams = [
+// script.js
+document.addEventListener('DOMContentLoaded', () => {
+    const teamNames = [
         "Manchester City",
         "Arsenal",
         "Liverpool",
@@ -22,60 +23,59 @@ document.addEventListener("DOMContentLoaded", function() {
         "Ipswich Town"
     ];
 
-    const numbersContainer = document.querySelector(".numbers");
-    const teamsContainer = document.querySelector(".teams");
+    const teamList = document.getElementById('teamList');
+    const numbersDiv = document.querySelector('.numbers');
 
-    function generateNumbers() {
-        for (let i = 1; i <= 20; i++) {
-            const numberElement = document.createElement("div");
-            numberElement.className = "number";
-            numberElement.textContent = i;
-            numbersContainer.appendChild(numberElement);
+    // Generate numbers
+    for (let i = 1; i <= 20; i++) {
+        const numberDiv = document.createElement('div');
+        numberDiv.classList.add('number');
+        numberDiv.textContent = i;
+        numbersDiv.appendChild(numberDiv);
+    }
+
+    // Shuffle team names and generate team items
+    const shuffledTeams = teamNames.sort(() => Math.random() - 0.5);
+    shuffledTeams.forEach((team, index) => {
+        const teamDiv = document.createElement('div');
+        teamDiv.classList.add('team');
+        teamDiv.textContent = team;
+        teamDiv.setAttribute('draggable', 'true');
+        teamDiv.dataset.index = index;
+        teamList.appendChild(teamDiv);
+    });
+
+    // Drag and Drop functionality
+    let draggedItem = null;
+
+    document.addEventListener('dragstart', (e) => {
+        if (e.target.classList.contains('team')) {
+            draggedItem = e.target;
+            e.target.style.opacity = '0.5';
         }
-    }
+    });
 
-    function generateTeams() {
-        const shuffledTeams = teams.sort(() => Math.random() - 0.5);
-        shuffledTeams.forEach((team, index) => {
-            const teamElement = document.createElement("div");
-            teamElement.className = "team";
-            teamElement.textContent = team;
-            teamElement.draggable = true;
-            teamElement.dataset.index = index; // Assign index for positioning
-            teamElement.addEventListener("dragstart", onDragStart);
-            teamElement.addEventListener("dragover", onDragOver);
-            teamElement.addEventListener("drop", onDrop);
-            teamsContainer.appendChild(teamElement);
-        });
-    }
-
-    function onDragStart(event) {
-        event.dataTransfer.setData("text/plain", event.target.dataset.index);
-        event.dataTransfer.effectAllowed = "move";
-    }
-
-    function onDragOver(event) {
-        event.preventDefault();
-        event.dataTransfer.dropEffect = "move";
-    }
-
-    function onDrop(event) {
-        event.preventDefault();
-        const draggedIndex = event.dataTransfer.getData("text/plain");
-        const dropTarget = event.target;
-
-        if (dropTarget.classList.contains("team")) {
-            const allTeams = Array.from(teamsContainer.children);
-            const dropIndex = Array.from(dropTarget.parentNode.children).indexOf(dropTarget);
-            const draggedElement = allTeams[draggedIndex];
-
-            teamsContainer.insertBefore(
-                draggedElement,
-                dropIndex < draggedIndex ? dropTarget : dropTarget.nextSibling
-            );
+    document.addEventListener('dragend', (e) => {
+        if (e.target.classList.contains('team')) {
+            e.target.style.opacity = '1';
         }
-    }
+    });
 
-    generateNumbers();
-    generateTeams();
+    teamList.addEventListener('dragover', (e) => {
+        e.preventDefault();
+    });
+
+    teamList.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (e.target.classList.contains('team')) {
+            const target = e.target;
+            const targetIndex = target.dataset.index;
+            const draggedIndex = draggedItem.dataset.index;
+            // Swap positions
+            target.textContent = draggedItem.textContent;
+            draggedItem.textContent = target.textContent;
+            target.dataset.index = draggedIndex;
+            draggedItem.dataset.index = targetIndex;
+        }
+    });
 });
