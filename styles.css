@@ -2,54 +2,47 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
-    overflow: hidden; /* Prevent scrolling on the body */
 }
 
 .container {
     display: flex;
     align-items: flex-start;
-    width: 80vw; /* Adjust as needed */
-    height: 80vh; /* Adjust as needed */
-    max-width: 1200px; /* Maximum width */
-    max-height: 600px; /* Maximum height */
+    max-width: 100%;
+    max-height: 100%;
     overflow: hidden;
 }
 
 .numbers, .teams {
     display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 0;
 }
 
 .numbers {
-    flex-shrink: 0;
-    width: 60px; /* Fixed width for numbers */
-    font-size: calc(16px + 0.5vw); /* Responsive font size */
-    font-weight: bold;
+    margin-right: 20px;
 }
 
-.teams {
-    flex-grow: 1;
-    padding-left: 10px;
-    font-size: calc(14px + 0.5vw); /* Responsive font size */
-    overflow-y: auto; /* Enable vertical scrolling within the teams column if needed */
-}
-
-.team {
-    padding: 8px;
-    margin: 4px 0;
-    background-color: #fff;
+.numbers div, .teams div {
+    padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    background-color: #fff;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    margin-bottom: 5px;
 }
 
-.team:hover {
+.numbers div {
     background-color: #e0e0e0;
+    cursor: default;
+}
+
+.teams div {
+    background-color: #ffffff;
+}
+
+.dragging {
+    opacity: 0.5;
 }
