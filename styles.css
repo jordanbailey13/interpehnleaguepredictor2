@@ -1,14 +1,24 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9; /* Light background color */
-    margin: 0;
-    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
     display: flex;
     align-items: flex-start; /* Align items at the top */
     gap: 20px; /* Space between the columns */
+    max-width: 100vw; /* Ensure container doesn't exceed viewport width */
+    max-height: 90vh; /* Ensure container doesn't exceed viewport height */
+    overflow: auto; /* Enable scrolling if content overflows */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
 .numbers {
