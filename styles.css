@@ -5,15 +5,15 @@ html, body {
     justify-content: center;
     align-items: center;
     background-color: #f4f4f9; /* Light background color */
+    overflow: hidden; /* Hide scrollbars */
 }
 
 .container {
     display: flex;
-    flex-direction: row; /* Horizontal layout */
     gap: 20px; /* Space between the columns */
-    max-width: 90vw; /* Maximum width relative to viewport width */
-    max-height: 90vh; /* Maximum height relative to viewport height */
-    overflow: hidden; /* Hide overflow to prevent scrolling */
+    max-width: 80vw; /* Maximum width relative to viewport width */
+    max-height: 80vh; /* Maximum height relative to viewport height */
+    overflow: auto; /* Enable scrolling if content overflows */
     box-sizing: border-box; /* Include padding and border in element's total width and height */
     padding: 20px; /* Add padding around the content */
     background-color: #fff; /* White background for the container */
@@ -21,7 +21,6 @@ html, body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for a card-like appearance */
     align-items: flex-start; /* Align items at the top */
     justify-content: center; /* Center horizontally */
-    position: relative; /* Positioning context for centering */
 }
 
 .numbers {
